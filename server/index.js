@@ -19,7 +19,16 @@ const PORT = process.env.PORT || 5000;
 app.set('trust proxy', true);
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://worfe.vip',
+    'https://www.worfe.vip',
+    'https://worfe-vip.netlify.app',
+    'http://localhost:3000',
+    'http://localhost:3001'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
