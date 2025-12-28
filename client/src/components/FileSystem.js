@@ -15,10 +15,8 @@ function FileSystem() {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [announcement, setAnnouncement] = useState(null);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(null);
-  const [closedAnnouncements, setClosedAnnouncements] = useState([]);
   // V2: Dosya detay modalı
   const [selectedFile, setSelectedFile] = useState(null);
   const [showFileModal, setShowFileModal] = useState(false);
@@ -43,19 +41,11 @@ function FileSystem() {
     
     fetchFiles();
     fetchMessages();
-    fetchAnnouncement();
     fetchFavorites();
-    
-    // Kapatılan duyuruları localStorage'dan yükle
-    const closed = localStorage.getItem('closedAnnouncements');
-    if (closed) {
-      setClosedAnnouncements(JSON.parse(closed));
-    }
     
     // Her 30 saniyede bir mesajları kontrol et
     const interval = setInterval(() => {
       fetchMessages();
-      fetchAnnouncement();
     }, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -67,11 +57,6 @@ function FileSystem() {
     }
   }, [searchQuery, selectedCategory, sortBy, sortOrder, currentPage]);
 
-  const handleCloseAnnouncement = (announcementId) => {
-    const newClosed = [...closedAnnouncements, announcementId];
-    setClosedAnnouncements(newClosed);
-    localStorage.setItem('closedAnnouncements', JSON.stringify(newClosed));
-  };
 
   const fetchFiles = async () => {
     try {
@@ -325,19 +310,6 @@ function FileSystem() {
     }
   };
 
-  const fetchAnnouncement = async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/admin/announcement`,
-        { headers: getAuthHeaders() }
-      );
-      if (response.data) {
-        setAnnouncement(response.data);
-      }
-    } catch (error) {
-      console.error('Duyuru yükleme hatası:', error);
-    }
-  };
 
   const handleMessageRead = async (messageId) => {
     try {
@@ -420,8 +392,6 @@ function FileSystem() {
   // Filtreleme artık backend'de yapılıyor, burada sadece görüntüleme için
   const displayFiles = files;
 
-  const shouldShowAnnouncement = announcement && !closedAnnouncements.includes(announcement.id);
-
   return (
     <div className="file-system">
       <Helmet>
@@ -435,23 +405,6 @@ function FileSystem() {
         <meta name="twitter:description" content="WORFE VIP dosya arşivi - Premium hacker araçları ve güvenlik kaynakları." />
         <link rel="canonical" href="https://worfe.vip/files" />
       </Helmet>
-      {shouldShowAnnouncement && (
-        <div className="announcement-banner">
-          <div className="announcement-content">
-            <div className="announcement-header">
-              <h3>{announcement.title}</h3>
-              <button 
-                className="close-announcement-btn"
-                onClick={() => handleCloseAnnouncement(announcement.id)}
-                title="Kapat"
-              >
-                ×
-              </button>
-            </div>
-            <p>{announcement.content}</p>
-          </div>
-        </div>
-      )}
 
       {showMessageModal && currentMessage && (
         <div className="message-modal-overlay" onClick={() => {

@@ -23,10 +23,8 @@ function AdminPanel() {
   });
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [announcements, setAnnouncements] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [messageForm, setMessageForm] = useState({ message: '' });
-  const [announcementForm, setAnnouncementForm] = useState({ title: '', content: '' });
   const [banForm, setBanForm] = useState({ is_banned: false, ban_reason: '' });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [dashboardStats, setDashboardStats] = useState(null);
@@ -37,7 +35,6 @@ function AdminPanel() {
     fetchCodes();
     fetchUsers();
     fetchCategories();
-    fetchAnnouncements();
   }, []);
 
   // Kategoriler yüklendiğinde ilk kategoriyi seç
@@ -193,17 +190,6 @@ function AdminPanel() {
     }
   };
 
-  const fetchAnnouncements = async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/admin/announcements`,
-        { headers: getAuthHeaders() }
-      );
-      setAnnouncements(response.data);
-    } catch (error) {
-      console.error('Duyuru listesi hatası:', error);
-    }
-  };
 
   // V2: Sadece dosya yükleme, metin paylaşma kaldırıldı
   const handleFileUpload = async (e) => {
@@ -253,22 +239,6 @@ function AdminPanel() {
     setLoading(false);
   };
 
-  const handleDeleteAnnouncement = async (announcementId) => {
-    if (!window.confirm('Bu duyuruyu silmek istediğinize emin misiniz?')) {
-      return;
-    }
-
-    try {
-      await axios.delete(
-        `${API_URL}/admin/announcement/${announcementId}`,
-        { headers: getAuthHeaders() }
-      );
-      alert('Duyuru silindi!');
-      fetchAnnouncements();
-    } catch (error) {
-      alert('Silme hatası: ' + (error.response?.data?.error || 'Bilinmeyen hata'));
-    }
-  };
 
   const handleDeleteFile = async (fileId) => {
     if (!window.confirm('Bu dosyayı silmek istediğinize emin misiniz?')) {
@@ -321,24 +291,6 @@ function AdminPanel() {
     }
   };
 
-  const handleCreateAnnouncement = async () => {
-    if (!announcementForm.title.trim() || !announcementForm.content.trim()) {
-      alert('Başlık ve içerik gerekli');
-      return;
-    }
-
-    try {
-      await axios.post(
-        `${API_URL}/admin/announcement`,
-        announcementForm,
-        { headers: getAuthHeaders() }
-      );
-      alert('Duyuru oluşturuldu!');
-      setAnnouncementForm({ title: '', content: '' });
-    } catch (error) {
-      alert('Duyuru oluşturma hatası: ' + (error.response?.data?.error || 'Bilinmeyen hata'));
-    }
-  };
 
   const handleBanUser = async (userId, isBanned, reason) => {
     try {
@@ -406,12 +358,6 @@ function AdminPanel() {
           }}
         >
           KATEGORİLER
-        </button>
-        <button
-          className={`admin-tab ${activeTab === 'announcement' ? 'active' : ''}`}
-          onClick={() => setActiveTab('announcement')}
-        >
-          DUYURU
         </button>
       </div>
       
@@ -884,40 +830,6 @@ function AdminPanel() {
         </div>
       )}
 
-      {activeTab === 'announcement' && (
-        <div className="admin-content">
-          <div className="announcement-section">
-            <h2>Genel Duyuru Oluştur</h2>
-            <form onSubmit={(e) => { e.preventDefault(); handleCreateAnnouncement(); }} className="announcement-form">
-              <div className="form-group">
-                <label>Başlık</label>
-                <input
-                  type="text"
-                  value={announcementForm.title}
-                  onChange={(e) => setAnnouncementForm({ ...announcementForm, title: e.target.value })}
-                  className="cyber-input"
-                  required
-                  placeholder="Duyuru başlığı"
-                />
-              </div>
-              <div className="form-group">
-                <label>İçerik</label>
-                <textarea
-                  value={announcementForm.content}
-                  onChange={(e) => setAnnouncementForm({ ...announcementForm, content: e.target.value })}
-                  className="cyber-input"
-                  rows="8"
-                  required
-                  placeholder="Duyuru içeriği"
-                />
-              </div>
-              <button type="submit" className="announcement-btn">
-                DUYURU OLUŞTUR
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

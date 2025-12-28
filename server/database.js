@@ -234,14 +234,7 @@ db.serialize(() => {
     FOREIGN KEY (user_id) REFERENCES users(id)
   )`);
 
-  // Duyurular tablosu
-  db.run(`CREATE TABLE IF NOT EXISTS announcements (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    content TEXT NOT NULL,
-    is_active INTEGER DEFAULT 1,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`);
+  // Duyurular tablosu kaldırıldı - artık kullanılmıyor
 
   // Kategoriler tablosu
   db.run(`CREATE TABLE IF NOT EXISTS categories (
