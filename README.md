@@ -2,28 +2,23 @@
 
 Premium Hacker Tools & Security Resources Platform
 
-## 🚀 Hızlı Başlangıç
+## ✅ Backend Çalışıyor!
 
-### Backend Deploy (Render.com)
+Backend URL: `https://worfe-vip.onrender.com`
 
-1. https://render.com > New Web Service
-2. GitHub repo: `worfe-vip`
-3. Root Directory: `server`
-4. Build: `npm install`
-5. Start: `node index.js`
-6. Env Vars: `JWT_SECRET`, `NODE_ENV=production`
+## 🔧 Netlify Environment Variable
 
-### Frontend Deploy (Netlify)
+**Şimdi yapmanız gereken:**
 
-1. https://app.netlify.com > Add new site
-2. GitHub repo: `worfe-vip`
-3. Base directory: `client`
-4. Build: `npm install && npm run build`
-5. Publish: `client/build`
-6. Env Var: `REACT_APP_API_URL` = Backend URL (örn: `https://worfe-vip-backend.onrender.com/api`)
+1. **Netlify Dashboard:** https://app.netlify.com/sites/worfe-vip/configuration/env
+2. **Add variable:**
+   - Key: `REACT_APP_API_URL`
+   - Value: `https://worfe-vip.onrender.com/api`
+3. **Save**
+4. **Deploys** > **Trigger deploy** > **Clear cache and deploy site**
 
 ## 📝 Notlar
 
-- Backend URL'i `/api` ile bitmeli
-- CORS ayarları worfe.vip için yapılandırıldı
-- Environment variable değişikliklerinden sonra yeni deploy gerekli
+- Backend çalışıyor ✅
+- Sadece Netlify'da environment variable ayarlanmalı
+- Deploy sonrası site çalışacak
