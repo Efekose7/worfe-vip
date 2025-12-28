@@ -1,24 +1,28 @@
 # WORFE VIP
 
-Premium Hacker Tools & Security Resources Platform
+## 🚀 Render.com Servis Oluşturma
 
-## ✅ Backend Çalışıyor!
+**Otomatik (Token ile):**
+```powershell
+.\setup-render.ps1
+```
 
-Backend URL: `https://worfe-vip.onrender.com`
+**Manuel:**
+1. https://dashboard.render.com/new/web-service
+2. GitHub repo: `Efekose7/worfe-vip`
+3. Ayarlar:
+   - Name: `worfe-vip-backend`
+   - Root Directory: `server`
+   - Build: `npm install`
+   - Start: `node index.js`
+   - Plan: Free
+4. Environment Variables:
+   - `JWT_SECRET` = `worfe_vip_secret_key_2024_secure`
+   - `NODE_ENV` = `production`
+5. Create Web Service
 
-## 🔧 Netlify Environment Variable
+## 🔧 Netlify Ayarları
 
-**Şimdi yapmanız gereken:**
-
-1. **Netlify Dashboard:** https://app.netlify.com/sites/worfe-vip/configuration/env
-2. **Add variable:**
-   - Key: `REACT_APP_API_URL`
-   - Value: `https://worfe-vip.onrender.com/api`
-3. **Save**
-4. **Deploys** > **Trigger deploy** > **Clear cache and deploy site**
-
-## 📝 Notlar
-
-- Backend çalışıyor ✅
-- Sadece Netlify'da environment variable ayarlanmalı
-- Deploy sonrası site çalışacak
+1. **Environment Variables:** https://app.netlify.com/sites/worfe-vip/configuration/env
+   - `REACT_APP_API_URL` = `https://YOUR-BACKEND-URL.onrender.com/api`
+2. **Deploy:** Deploys > Trigger deploy > Clear cache
