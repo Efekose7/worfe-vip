@@ -1,29 +1,29 @@
-# Worfe VIP - Premium Dosya Paylaşım Sistemi
+# WORFE VIP
 
-Siber güvenlik temasına sahip, premium dosya paylaşım web sitesi.
+Premium Hacker Tools & Security Resources Platform
 
-## Kurulum
+## 🚀 Hızlı Başlangıç
 
-1. Tüm bağımlılıkları yükleyin:
-```bash
-npm run install-all
-```
+### Backend Deploy (Render.com)
 
-2. Sunucuyu başlatın:
-```bash
-npm run dev
-```
+1. https://render.com > New Web Service
+2. GitHub repo: `worfe-vip`
+3. Root Directory: `server`
+4. Build: `npm install`
+5. Start: `node index.js`
+6. Env Vars: `JWT_SECRET`, `NODE_ENV=production`
 
-## Varsayılan Admin Bilgileri
+### Frontend Deploy (Netlify)
 
-- **Kullanıcı Adı:** admin
-- **Şifre:** admin123
+1. https://app.netlify.com > Add new site
+2. GitHub repo: `worfe-vip`
+3. Base directory: `client`
+4. Build: `npm install && npm run build`
+5. Publish: `client/build`
+6. Env Var: `REACT_APP_API_URL` = Backend URL (örn: `https://worfe-vip-backend.onrender.com/api`)
 
-## Özellikler
+## 📝 Notlar
 
-- Kullanıcı kayıt ve giriş sistemi
-- Özel kod sistemi (her kod sadece bir IP'den kullanılabilir)
-- Premium dosya paylaşım arayüzü
-- Admin paneli (dosya yükleme, kod yönetimi)
-- Siber güvenlik teması
-
+- Backend URL'i `/api` ile bitmeli
+- CORS ayarları worfe.vip için yapılandırıldı
+- Environment variable değişikliklerinden sonra yeni deploy gerekli
